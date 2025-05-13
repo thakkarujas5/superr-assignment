@@ -1,25 +1,83 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../middleware/auth');
+const authControllers = require('../controllers/authController');
 const router = express.Router();
 
-// Dummy user DB (replace with real DB)
-const users = [
-    { id: 1, username: 'teacher1', password: 'pass', roles: ['TEACHER'] },
-    { id: 2, username: 'student1', password: 'pass', roles: ['STUDENT'] },
-    { id: 3, username: 'admin1', password: 'pass', roles: ['ADMIN'] },
-    { id: 4, username: 'superuser', password: 'pass', roles: ['TEACHER', 'ADMIN'] }
-];
+/**
+ * @swagger
+ * /auth/v1/signup:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - password
+ *               - roles
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: User's username
+ *               password:
+ *                 type: string
+ *                 description: User's password
+ *               roles:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   enum: [TEACHER, STUDENT, ADMIN]
+ *                 description: User roles
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ *       400:
+ *         description: Invalid input
+ *       409:
+ *         description: Username already exists
+ *       500:
+ *         description: Server error
+ */
+router.post('/v1/signup', authControllers.signup);
 
-router.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    const user = users.find(u => u.username === username && u.password === password);
-    if (!user) {
-        return res.status(401).json({ message: 'Invalid credentials' });
-    }
-    // Issue JWT
-    const token = jwt.sign({ userId: user.id, roles: user.roles }, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
-});
+/**
+ * @swagger
+ * /auth/v1/login:
+ *   post:
+ *     summary: Login user and get JWT token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *       401:
+ *         description: Invalid credentials
+ *       500:
+ *         description: Server error
+ */
+router.post('/v1/login', authControllers.login);
 
 module.exports = router;

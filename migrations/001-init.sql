@@ -1,3 +1,9 @@
+CREATE TABLE Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(64) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    roles JSON NOT NULL
+);
 CREATE TABLE Sessions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     school_id INT NOT NULL,

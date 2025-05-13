@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 
-// Secret for JWT signing (move to .env in production)
-const JWT_SECRET = 'superr_secret_key';
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Authentication middleware
 function authenticate(req, res, next) {
@@ -30,8 +32,8 @@ function authorize(roles = []) {
         if (!hasRole) {
             return res.status(403).json({ message: 'Forbidden' });
         }
-        next();
+         next();
     };
 }
 
-module.exports = { authenticate, authorize, JWT_SECRET };
+module.exports = { authenticate, authorize };

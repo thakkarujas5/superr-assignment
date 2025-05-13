@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Context
+We have two Android applications that work in tandem to create a seamless educational experience:
+1)  Whiteboard App : A digital whiteboard application primarily used by teachers in classroom settings. It replaces the traditional classroom whiteboard and allows instructors to create and display content in real-time.
+2) Notebook App : A personal application used by both students and teachers on their individual Android devices. It replaces traditional notebooks and PDF materials, allowing for digital note-taking and content consumption.
+These applications synchronize for a feature called "Quiz" where teachers can control questions from their Whiteboard app, and students can submit answers through their Notebook app.
+
+You are a senior engineer working on this product. When writing and thinking about features assume the lens of user of the problem statement above.
+
+Detail out your inputs in structured bullet points. Ensure that the proposed solution contributes to the exisiting body of knowledge.
+
+If you are adding, deleting or updating any file, update the corresponding structure file in instructions/structure.md.
+
